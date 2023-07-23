@@ -82,33 +82,35 @@ const MockData = () => {
     return (
         <>
             <button onClick={handleFormSubmit}>Submit</button>
-            <table>
-                <thead>
-                    <tr>
-                        <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} /></th>
-                        <th>Id</th>
-                        <th>Name</th>
-                        <th>Amount</th>
-                        <th>Purchase Date</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {
-                        data.map((item) => (
-                            <tr key={item.id}>
-                                <td><input type="checkbox" checked={checkedItems[item.id] || false} onChange={(event) => handleCheckboxChange(event, item.id)} /></td>
-                                <td>{item.id}</td>
-                                <td>{item.name}</td>
-                                <td><input type='text' value={editedData.find((editedItem) => editedItem.id === item.id)?.amount || item.amount}
-                                    onChange={(event) => handleAmountChange(event, item.id)}
-                                /></td>
-                                <td>{item.purchaseDate}</td>
-                            </tr>
-                        ))
-                    }
-                </tbody>
-            </table>
-
+            <div className='container'>
+                <table>
+                    <thead>
+                        <tr>
+                            <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} /></th>
+                            <th>Id</th>
+                            <th>Name</th>
+                            <th>Amount</th>
+                            <th>Purchase Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {
+                            data.map((item) => (
+                                <tr key={item.id}>
+                                    <td><input type="checkbox" checked={checkedItems[item.id] || false} onChange={(event) => handleCheckboxChange(event, item.id)} /></td>
+                                    <td>{item.id}</td>
+                                    <td>{item.name}</td>
+                                    <td><input type='text' value={editedData.find((editedItem) => editedItem.id === item.id)?.amount || item.amount}
+                                        onChange={(event) => handleAmountChange(event, item.id)}
+                                    /></td>
+                                    <td>{item.purchaseDate}</td>
+                                </tr>
+                            ))
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <p>Total Items: {data.length} (showing:15)</p>
         </>
 
     )
