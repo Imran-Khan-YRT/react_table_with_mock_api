@@ -86,7 +86,7 @@ const MockData = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} /></th>
+                            <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th>
                             <th>Id</th>
                             <th>Name</th>
                             <th>Amount</th>
