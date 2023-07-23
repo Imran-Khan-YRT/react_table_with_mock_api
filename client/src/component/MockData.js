@@ -11,16 +11,16 @@ const MockData = () => {
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await fetch("https://my.api.mockaroo.com/table_data.json?key=d0de7900")
+                const response = await fetch("http://localhost:3005/api/items")
                 const responseData = await response.json();
-                console.log(responseData)
+                // console.log(responseData)
                 setData(responseData);
                 const initialCheckedItems = {};
                 responseData.forEach((item) => {
                     initialCheckedItems[item.id] = item.checked;
                 });
                 setCheckedItems(initialCheckedItems);
-                console.log(initialCheckedItems)
+                // console.log(initialCheckedItems)
             } catch (error) {
                 console.error('Error fetching data:', error);
             }
@@ -63,7 +63,7 @@ const MockData = () => {
         try {
             // Make API calls to update the data
             for (const editedItem of editedData) {
-                await fetch(`https://my.api.mockaroo.com/table_data?key=d0de7900`, {
+                await fetch(`http://localhost:3005/api/items`, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
