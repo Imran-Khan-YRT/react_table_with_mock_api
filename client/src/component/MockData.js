@@ -63,8 +63,8 @@ const MockData = () => {
         try {
             // Make API calls to update the data
             for (const editedItem of editedData) {
-                await fetch(`http://localhost:3005/api/items`, {
-                    method: 'POST',
+                await fetch(`http://localhost:3005/api/items/${editedItem.id}`, {
+                    method: 'PUT',
                     headers: {
                         'Content-Type': 'application/json',
                     },
