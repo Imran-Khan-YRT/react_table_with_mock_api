@@ -64,17 +64,17 @@ const MockData = () => {
     const handleFormSubmit = async () => {
         try {
             // Make API calls to update the data
-            for (const editedItem of editedData) {
-                await fetch(`http://localhost:3005/api/items/${editedItem.id}`, {
-                    method: 'PUT',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify({ id: editedItem.id, amount: editedItem.amount }), // Include the 'id' to identify the resource
-                });
-            }
+            // for (const editedItem of editedData) {
+            await fetch(`http://localhost:3005/api/items/edit`, {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ list: editedData }), // Include the 'id' to identify the resource
+            });
+            // }
             // Refresh the data after successful update
-            window.location.reload();
+            // window.location.reload();
         } catch (error) {
             console.error('Error updating data:', error);
         }

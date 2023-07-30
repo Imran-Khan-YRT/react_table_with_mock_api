@@ -19,23 +19,32 @@ app.get('/api/items', (req, res) => {
     res.json(data);
 });
 
-app.put('/api/items/:id', async (req, res) => {
+app.put('/api/items/edit', async (req, res) => {
+    // console.log(req.body);
+
     try {
-        const { id, amount } = req.body;
-        const itemIndex = tableData.findIndex(item => item.id === id);
+        const { list } = req.body
+        console.log("list" + list);
+        let i = 0;
+        while (i < list.length) {
+            const { id, amount } = list[i];
+            const itemIndex = tableData.findIndex(item => item.id === id);
 
-        if (itemIndex === -1) {
-            return res.status(404).json({ error: 'Item not found.' });
+            if (itemIndex === -1) {
+                return res.status(404).json({ error: 'Item not found.' });
+            }
+
+            // Modify the "amount" attribute in the array
+            tableData[itemIndex].amount = amount;
+
+            // Write the updated data back to the file (tabledata.json)
+            await fs.writeFile('tabledata.json', JSON.stringify(tableData, null, 2), 'utf8');
+
+
+            i++;
         }
-
-        // Modify the "amount" attribute in the array
-        tableData[itemIndex].amount = amount;
-
-        // Write the updated data back to the file (tabledata.json)
-        await fs.writeFile('tabledata.json', JSON.stringify(tableData, null, 2), 'utf8');
-
         // Send a response back to the client
-        res.json({ id: id, amount: amount });
+        res.json({ list: list });
     } catch (error) {
         console.error('Error:', error);
         res.status(500).json({ error: 'Internal server error.' });
