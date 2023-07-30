@@ -46,17 +46,19 @@ const MockData = () => {
         setCheckedItems(newCheckedItems);
     };
 
-    const handleAmountChange = (event, id) => {
+    const handleAmountChange = (event, id, initialAmount) => {
         const newAmount = event.target.value;
-        setEditedData((prevEditedData) => {
-            const newData = prevEditedData.find((item) => item.id === id);
-            if (newData) {
-                newData.amount = newAmount;
-            } else {
-                prevEditedData.push({ id, amount: newAmount });
-            }
-            return [...prevEditedData];
-        });
+        if (newAmount < initialAmount) {
+            setEditedData((prevEditedData) => {
+                const newData = prevEditedData.find((item) => item.id === id);
+                if (newData) {
+                    newData.amount = newAmount;
+                } else {
+                    prevEditedData.push({ id, amount: newAmount });
+                }
+                return [...prevEditedData];
+            });
+        }
     };
 
     const handleFormSubmit = async () => {
@@ -90,6 +92,7 @@ const MockData = () => {
                             <th>Id</th>
                             <th>Name</th>
                             <th>Amount</th>
+                            <th>Initial</th>
                             <th>Purchase Date</th>
                         </tr>
                     </thead>
@@ -101,8 +104,9 @@ const MockData = () => {
                                     <td>{item.id}</td>
                                     <td>{item.name}</td>
                                     <td><input type='text' value={editedData.find((editedItem) => editedItem.id === item.id)?.amount || item.amount}
-                                        onChange={(event) => handleAmountChange(event, item.id)}
+                                        onChange={(event) => handleAmountChange(event, item.id, item.initialAmount)}
                                     /></td>
+                                    <td>{item.initialAmount}</td>
                                     <td>{item.purchaseDate}</td>
                                 </tr>
                             ))

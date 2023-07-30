@@ -3,6 +3,11 @@ const cors = require('cors');
 const express = require('express');
 const tableData = require('./tableData.json');
 
+const fs = require('fs').promises;
+
+
+
+
 const app = express();
 const port = 3005;
 
@@ -14,14 +19,27 @@ app.get('/api/items', (req, res) => {
     res.json(data);
 });
 
-app.put('/api/items/:id', (req, res) => {
-    const { id, amount } = req.body;
-    const itemIndex = tableData.findIndex(item => item.id === id);
-    console.log(itemIndex);
-    // modify json file/ database here
-    tableData[itemIndex].amount = amount;
-    // Send a response back to the client
-    res.json({ id: id, amount: amount });
+app.put('/api/items/:id', async (req, res) => {
+    try {
+        const { id, amount } = req.body;
+        const itemIndex = tableData.findIndex(item => item.id === id);
+
+        if (itemIndex === -1) {
+            return res.status(404).json({ error: 'Item not found.' });
+        }
+
+        // Modify the "amount" attribute in the array
+        tableData[itemIndex].amount = amount;
+
+        // Write the updated data back to the file (tabledata.json)
+        await fs.writeFile('tabledata.json', JSON.stringify(tableData, null, 2), 'utf8');
+
+        // Send a response back to the client
+        res.json({ id: id, amount: amount });
+    } catch (error) {
+        console.error('Error:', error);
+        res.status(500).json({ error: 'Internal server error.' });
+    }
 });
 
 // Start the server
