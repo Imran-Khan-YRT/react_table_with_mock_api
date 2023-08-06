@@ -47,7 +47,9 @@ const MockData = () => {
     };
 
     const handleAmountChange = (event, id, initialAmount) => {
-        const newAmount = event.target.value;
+        let newAmount = event.target.value;
+        // check empty input - should be handled in a better way
+        if (newAmount === "") newAmount = "0";
         if (newAmount < initialAmount) {
             setEditedData((prevEditedData) => {
                 const newData = prevEditedData.find((item) => item.id === id);
