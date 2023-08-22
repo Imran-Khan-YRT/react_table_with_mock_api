@@ -16,7 +16,22 @@ app.use(cors());
 app.use(express.json());
 // Endpoint to get all data
 app.get('/api/items', (req, res) => {
-    res.json(data);
+    let { page, limit } = req.query;
+    page = parseInt(page);
+    limit = parseInt(limit);
+
+    const startIndex = (page - 1) * limit;
+    const endIndex = Math.min(startIndex + limit, tableData.length);
+    console.log(startIndex, endIndex)
+
+    const paginatedData = tableData.slice(startIndex, endIndex);
+
+    res.json({
+        currentPage: parseInt(page),
+        totalPage: Math.ceil(tableData.length / limit),
+        total: tableData.length,
+        data: paginatedData
+    });
 });
 
 app.put('/api/items/edit', async (req, res) => {

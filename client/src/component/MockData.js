@@ -1,32 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import './mockData.css'
 
+let totalData, limit = 5, totalPage;
 const MockData = () => {
     // store api data
     const [data, setData] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
     const [checkedItems, setCheckedItems] = useState([]);
     const [editedData, setEditedData] = useState([]);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const fetchData = async (page) => {
+        try {
+            const response = await fetch(`http://localhost:3005/api/items?page=${page}&limit=${limit}`);
+            const responseData = await response.json();
+            // console.log(responseData)
+            setData(responseData.data);
+            totalData = responseData.total;
+            totalPage = responseData.totalPage;
+            console.log(responseData.data.length);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     useEffect(() => {
-        const fetchData = async () => {
-            try {
-                const response = await fetch("http://localhost:3005/api/items")
-                const responseData = await response.json();
-                // console.log(responseData)
-                setData(responseData);
-                const initialCheckedItems = {};
-                responseData.forEach((item) => {
-                    initialCheckedItems[item.id] = item.checked;
-                });
-                setCheckedItems(initialCheckedItems);
-                // console.log(initialCheckedItems)
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            }
+        fetchData(currentPage);
+    }, [currentPage]);
+
+
+    const handleNextPage = () => {
+        if (currentPage < totalPage) {
+            setCurrentPage(prev => prev + 1);
         }
-        fetchData();
-    }, []);
+    };
+
+    const handlePreviousPage = () => {
+        if (currentPage > 1) {
+            setCurrentPage(prev => prev - 1);
+        }
+    };
 
     const handleCheckboxChange = (event, id) => {
         const isChecked = event.target.checked;
@@ -116,7 +129,14 @@ const MockData = () => {
                     </tbody>
                 </table>
             </div>
-            <p>Total Items: {data.length} (showing:15)</p>
+            <p>Total Items: {totalData} (showing:{data.length})</p>
+            <button onClick={handlePreviousPage} disabled={currentPage === 1} className={`${currentPage === 1 ? 'disabled' : ''}`}>
+                Previous
+            </button>
+            <span>Page {currentPage} of {totalPage}</span>
+            <button onClick={handleNextPage} disabled={currentPage === totalPage} className={`${currentPage === totalPage ? 'disabled' : ''}`}>
+                Next
+            </button>
         </>
 
     )

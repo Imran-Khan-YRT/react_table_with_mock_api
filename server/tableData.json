@@ -4,7 +4,7 @@
     "id": 1,
     "name": "Osmund Praundl",
     "initialAmount": 6.65,
-    "amount": "6.61",
+    "amount": "6.6",
     "purchaseDate": "04/06/2022"
   },
   {
@@ -164,7 +164,7 @@
     "id": 21,
     "name": "Kandy Trevains",
     "initialAmount": 71.37,
-    "amount": 71.37,
+    "amount": "71.3",
     "purchaseDate": "05/12/2021"
   },
   {
@@ -180,7 +180,7 @@
     "id": 23,
     "name": "Olympe Connelly",
     "initialAmount": 74.5,
-    "amount": 74.5,
+    "amount": "74",
     "purchaseDate": "08/04/2023"
   },
   {

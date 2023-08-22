@@ -6,7 +6,7 @@ table {
 }
 
 .container {
-  height: 500px;
+  height: 200px;
   overflow-y: scroll;
   margin-bottom: 50px;
 }
@@ -50,4 +50,8 @@ thead th {
   border-bottom: 2px solid gray;
   background-color: cornflowerblue;
   color: white;
+}
+
+.disabled {
+  background-color: gray;
 }
