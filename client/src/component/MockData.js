@@ -54,15 +54,15 @@ const MockData = () => {
     };
 
 
-    // const handleSelectAllChange = (event) => {
-    //     const isChecked = event.target.checked;
-    //     setSelectAll(isChecked);
-    //     const newCheckedItems = {};
-    //     data.forEach((item) => {
-    //         newCheckedItems[item.id] = isChecked;
-    //     });
-    //     setCheckedItems(newCheckedItems);
-    // };
+    const handleSelectAllChange = () => {
+        setData((prevData) => {
+            const updatedData = prevData.map((item) => {
+                item = { ...item, checked: true };
+                return item;
+            });
+            return updatedData;
+        });
+    };
 
     const handleAmountChange = (event, id, initialAmount) => {
         let newAmount = event.target.value;
@@ -108,7 +108,7 @@ const MockData = () => {
                 <table>
                     <thead>
                         <tr>
-                            {/* <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th> */}
+                            <th><input type='checkbox' onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th>
                             <th>Id</th>
                             <th>Name</th>
                             <th>Amount</th>

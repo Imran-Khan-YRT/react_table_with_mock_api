@@ -16,7 +16,7 @@
     "purchaseDate": "01/02/2022"
   },
   {
-    "checked": false,
+    "checked": true,
     "id": 3,
     "name": "Tabb Howells",
     "initialAmount": 10.54,
