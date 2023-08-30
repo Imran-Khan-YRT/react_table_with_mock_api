@@ -6,7 +6,7 @@ table {
 }
 
 .container {
-  height: 200px;
+  height: 220px;
   overflow-y: scroll;
   margin-bottom: 50px;
 }
@@ -38,6 +38,11 @@ button {
   letter-spacing: 1px;
 }
 
+button:hover {
+  background-color: blue;
+  font-weight: 800;
+}
+
 thead {
   position: sticky;
   top: 0;
@@ -54,4 +59,12 @@ thead th {
 
 .disabled {
   background-color: gray;
+}
+.disabled:hover {
+  background-color: gray;
+}
+
+.wrong_data {
+  border-color: red;
+  border: 2px solid red;
 }

@@ -6,7 +6,7 @@ const MockData = () => {
     // store api data
     const [data, setData] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
-    const [editedData, setEditedData] = useState([]);
+    const [showTooltip, setShowTooltip] = useState(false);
     const [currentPage, setCurrentPage] = useState(1);
 
     const fetchData = async (page) => {
@@ -73,22 +73,24 @@ const MockData = () => {
         // check empty input - should be handled in a better way
         if (newAmount === "") newAmount = "0";
         if (newAmount < initialAmount) {
-            setEditedData((prevEditedData) => {
-                const newData = prevEditedData.find((item) => item.id === id);
+            setShowTooltip(false)
+            setData((prevData) => {
+                const newData = prevData.find((item) => item.id === id);
                 if (newData) {
                     newData.amount = newAmount;
                 } else {
-                    prevEditedData.push({ id, amount: newAmount });
+                    prevData.push({ id, amount: newAmount });
                 }
-                return [...prevEditedData];
+                return [...prevData];
             });
+        }
+        else {
+            setShowTooltip(true)
         }
     };
 
     const handleFormSubmit = async () => {
         try {
-            // Make API calls to update the data
-            // for (const editedItem of editedData) {
             await fetch(`http://localhost:3005/api/items/edit`, {
                 method: 'PUT',
                 headers: {
@@ -133,7 +135,7 @@ const MockData = () => {
                                     </td>
                                     <td>{item.id}</td>
                                     <td>{item.name}</td>
-                                    <td><input type='text' value={editedData.find((editedItem) => editedItem.id === item.id)?.amount || item.amount}
+                                    <td><input id={`value-${item.id}`} type='number' value={parseFloat(data.find((temp) => temp.id === item.id)?.amount || item.amount)}
                                         onChange={(event) => handleAmountChange(event, item.id, item.initialAmount)}
                                     /></td>
                                     <td>{item.initialAmount}</td>
@@ -143,6 +145,7 @@ const MockData = () => {
                         }
                     </tbody>
                 </table>
+                {showTooltip && <p style={{ fontSize: "12px", paddingTop: "10px", textAlign: "center", color: "brown" }}>Please set a value less than the Initial value</p>}
             </div>
             <p>Total Items: {totalData} (showing:{data.length})</p>
             <button onClick={handlePreviousPage} disabled={currentPage === 1} className={`${currentPage === 1 ? 'disabled' : ''}`}>

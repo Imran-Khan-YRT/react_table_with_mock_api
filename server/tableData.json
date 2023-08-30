@@ -4,7 +4,7 @@
     "id": 1,
     "name": "Osmund Praundl",
     "initialAmount": 6.65,
-    "amount": "6.6",
+    "amount": "03.4567",
     "purchaseDate": "04/06/2022"
   },
   {
@@ -12,7 +12,7 @@
     "id": 2,
     "name": "Ardyth Toyne",
     "initialAmount": 40.38,
-    "amount": 40.38,
+    "amount": "1.4",
     "purchaseDate": "01/02/2022"
   },
   {
@@ -28,7 +28,7 @@
     "id": 4,
     "name": "Tish Crewe",
     "initialAmount": 60.54,
-    "amount": 60.54,
+    "amount": "06.22",
     "purchaseDate": "20/09/2021"
   },
   {
@@ -40,7 +40,7 @@
     "purchaseDate": "08/01/2021"
   },
   {
-    "checked": false,
+    "checked": true,
     "id": 6,
     "name": "Merl Conningham",
     "initialAmount": 55.81,
@@ -48,7 +48,7 @@
     "purchaseDate": "23/07/2021"
   },
   {
-    "checked": false,
+    "checked": true,
     "id": 7,
     "name": "Simonette Pawnsford",
     "initialAmount": 78.82,
