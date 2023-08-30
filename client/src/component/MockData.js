@@ -53,15 +53,19 @@ const MockData = () => {
         });
     };
 
-
     const handleSelectAllChange = () => {
+        // problems here- why do both console print the same thing
+        console.log(selectAll);
+        const updatedSelectAll = !selectAll; // Store the new value
+        setSelectAll(updatedSelectAll);
         setData((prevData) => {
             const updatedData = prevData.map((item) => {
-                item = { ...item, checked: true };
+                item = { ...item, checked: updatedSelectAll };
                 return item;
             });
             return updatedData;
         });
+        console.log(selectAll);
     };
 
     const handleAmountChange = (event, id, initialAmount) => {
@@ -108,7 +112,7 @@ const MockData = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th><input type='checkbox' onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th>
+                            <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th>
                             <th>Id</th>
                             <th>Name</th>
                             <th>Amount</th>
