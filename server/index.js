@@ -42,7 +42,7 @@ app.put('/api/items/edit', async (req, res) => {
         console.log("list" + list);
         let i = 0;
         while (i < list.length) {
-            const { id, amount } = list[i];
+            const { id, amount, checked } = list[i];
             const itemIndex = tableData.findIndex(item => item.id === id);
 
             if (itemIndex === -1) {
@@ -51,6 +51,7 @@ app.put('/api/items/edit', async (req, res) => {
 
             // Modify the "amount" attribute in the array
             tableData[itemIndex].amount = amount;
+            tableData[itemIndex].checked = checked;
 
             // Write the updated data back to the file (tabledata.json)
             await fs.writeFile('tabledata.json', JSON.stringify(tableData, null, 2), 'utf8');

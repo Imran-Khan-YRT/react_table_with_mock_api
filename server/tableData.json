@@ -24,7 +24,7 @@
     "purchaseDate": "08/04/2022"
   },
   {
-    "checked": false,
+    "checked": true,
     "id": 4,
     "name": "Tish Crewe",
     "initialAmount": 60.54,
@@ -72,7 +72,7 @@
     "purchaseDate": "14/03/2022"
   },
   {
-    "checked": false,
+    "checked": true,
     "id": 10,
     "name": "Fredi Strethill",
     "initialAmount": 3.56,

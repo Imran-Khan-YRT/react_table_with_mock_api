@@ -6,7 +6,6 @@ const MockData = () => {
     // store api data
     const [data, setData] = useState([]);
     const [selectAll, setSelectAll] = useState(false);
-    const [checkedItems, setCheckedItems] = useState([]);
     const [editedData, setEditedData] = useState([]);
     const [currentPage, setCurrentPage] = useState(1);
 
@@ -41,23 +40,29 @@ const MockData = () => {
         }
     };
 
-    const handleCheckboxChange = (event, id) => {
-        const isChecked = event.target.checked;
-        setCheckedItems((prevCheckedItems) => ({
-            ...prevCheckedItems,
-            [id]: isChecked,
-        }));
+
+    const handleCheckboxChange = (itemId) => {
+        setData((prevData) => {
+            const updatedData = prevData.map((item) => {
+                if (item.id === itemId) {
+                    return { ...item, checked: !item.checked };
+                }
+                return item;
+            });
+            return updatedData;
+        });
     };
 
-    const handleSelectAllChange = (event) => {
-        const isChecked = event.target.checked;
-        setSelectAll(isChecked);
-        const newCheckedItems = {};
-        data.forEach((item) => {
-            newCheckedItems[item.id] = isChecked;
-        });
-        setCheckedItems(newCheckedItems);
-    };
+
+    // const handleSelectAllChange = (event) => {
+    //     const isChecked = event.target.checked;
+    //     setSelectAll(isChecked);
+    //     const newCheckedItems = {};
+    //     data.forEach((item) => {
+    //         newCheckedItems[item.id] = isChecked;
+    //     });
+    //     setCheckedItems(newCheckedItems);
+    // };
 
     const handleAmountChange = (event, id, initialAmount) => {
         let newAmount = event.target.value;
@@ -85,17 +90,17 @@ const MockData = () => {
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify({ list: editedData }), // Include the 'id' to identify the resource
+                body: JSON.stringify({ list: data }), // Include the 'id' to identify the resource
             });
             // }
             // Refresh the data after successful update
-            // window.location.reload();
+            window.location.reload();
         } catch (error) {
             console.error('Error updating data:', error);
         }
     };
 
-
+    console.log(data);
     return (
         <>
             <button onClick={handleFormSubmit}>Submit</button>
@@ -103,7 +108,7 @@ const MockData = () => {
                 <table>
                     <thead>
                         <tr>
-                            <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th>
+                            {/* <th><input type='checkbox' checked={selectAll} onChange={handleSelectAllChange} style={{ scale: "1.5" }} /></th> */}
                             <th>Id</th>
                             <th>Name</th>
                             <th>Amount</th>
@@ -115,7 +120,13 @@ const MockData = () => {
                         {
                             data.map((item) => (
                                 <tr key={item.id}>
-                                    <td><input type="checkbox" checked={checkedItems[item.id] || false} onChange={(event) => handleCheckboxChange(event, item.id)} /></td>
+                                    <td>
+                                        <input
+                                            type="checkbox"
+                                            checked={item.checked}
+                                            onChange={() => handleCheckboxChange(item.id)}
+                                        />
+                                    </td>
                                     <td>{item.id}</td>
                                     <td>{item.name}</td>
                                     <td><input type='text' value={editedData.find((editedItem) => editedItem.id === item.id)?.amount || item.amount}
