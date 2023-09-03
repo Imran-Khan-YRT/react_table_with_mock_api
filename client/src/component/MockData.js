@@ -100,7 +100,11 @@ const MockData = () => {
             });
             // }
             // Refresh the data after successful update
-            window.location.reload();
+            // window.location.reload();
+            document.getElementById('content').innerHTML = "Saved";
+            setTimeout(function () {
+                document.getElementById('content').innerHTML = "";
+            }, 2000);
         } catch (error) {
             console.error('Error updating data:', error);
         }
@@ -146,6 +150,7 @@ const MockData = () => {
                     </tbody>
                 </table>
                 {showTooltip && <p style={{ fontSize: "12px", paddingTop: "10px", textAlign: "center", color: "brown" }}>Please set a value less than the Initial value</p>}
+                <p id='content' style={{ fontSize: "14px", fontWeight: "bold", paddingTop: "10px", textAlign: "center", color: "blue" }}></p>
             </div>
             <p>Total Items: {totalData} (showing:{data.length})</p>
             <button onClick={handlePreviousPage} disabled={currentPage === 1} className={`${currentPage === 1 ? 'disabled' : ''}`}>
